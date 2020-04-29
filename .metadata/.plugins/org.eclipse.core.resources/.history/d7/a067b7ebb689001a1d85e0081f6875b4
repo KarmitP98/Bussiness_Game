@@ -1,0 +1,61 @@
+package design;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Dimension;
+
+public class HomePageForm extends JFrame {
+
+	private JPanel contentPane;
+	private Dimension screenSize;
+	private int WIDTH, HEIGHT;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					HomePageForm frame = new HomePageForm();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void setScreenSize() {
+		// TODO Auto-generated method stub
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		WIDTH = (int) screenSize.getWidth();
+		HEIGHT = (int) screenSize.getHeight();
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public HomePageForm() {
+		
+		setScreenSize();
+		
+		setResizable(false);
+		setBackground(Color.WHITE);
+		setAlwaysOnTop(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+	}
+
+}

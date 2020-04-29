@@ -1,0 +1,128 @@
+package design;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import java.awt.Component;
+
+public class HomePageForm extends JFrame {
+
+	private JPanel contentPane;
+	private Dimension screenSize;
+	private int WIDTH, HEIGHT;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					HomePageForm frame = new HomePageForm();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void setScreenSize() {
+		// TODO Auto-generated method stub
+		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.WIDTH = (int) screenSize.getWidth();
+		this.HEIGHT = (int) screenSize.getHeight();
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public HomePageForm() {
+		// Set screen size
+		setScreenSize();
+
+		setResizable(false);
+		setBackground(Color.WHITE);
+		setAlwaysOnTop(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0, 0, 1920, 1080);
+		setUndecorated(true);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(UIManager.getColor("CheckBox.background"));
+		panel.setBounds(1280, 200, 500, 680);
+		contentPane.add(panel);
+		SpringLayout sl_panel = new SpringLayout();
+		panel.setLayout(sl_panel);
+		
+				JLabel exitBtn = new JLabel("Exit");
+				exitBtn.setAlignmentY(Component.TOP_ALIGNMENT);
+				sl_panel.putConstraint(SpringLayout.WEST, exitBtn, 100, SpringLayout.WEST, panel);
+				sl_panel.putConstraint(SpringLayout.SOUTH, exitBtn, -168, SpringLayout.SOUTH, panel);
+				panel.add(exitBtn);
+				exitBtn.setBackground(Color.BLACK);
+				exitBtn.setForeground(Color.BLACK);
+				exitBtn.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						System.exit(0);
+					}
+				});
+		exitBtn.setFont(new Font("Dialog", Font.BOLD, 24));
+		exitBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		exitBtn.setToolTipText("Exit Button");
+		
+		JLabel newGameBtn = new JLabel("New Game");
+		sl_panel.putConstraint(SpringLayout.EAST, exitBtn, 51, SpringLayout.WEST, newGameBtn);
+		newGameBtn.setAlignmentY(Component.TOP_ALIGNMENT);
+		sl_panel.putConstraint(SpringLayout.NORTH, newGameBtn, 64, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, newGameBtn, 100, SpringLayout.WEST, panel);
+		newGameBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		newGameBtn.setFont(new Font("Dialog", Font.BOLD, 24));
+		panel.add(newGameBtn);
+		
+		JLabel loadGameBtn = new JLabel("Load Game");
+		loadGameBtn.setAlignmentY(Component.TOP_ALIGNMENT);
+		sl_panel.putConstraint(SpringLayout.NORTH, loadGameBtn, 64, SpringLayout.SOUTH, newGameBtn);
+		loadGameBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		loadGameBtn.setFont(new Font("Dialog", Font.BOLD, 24));
+		sl_panel.putConstraint(SpringLayout.WEST, loadGameBtn, 0, SpringLayout.WEST, newGameBtn);
+		panel.add(loadGameBtn);
+		
+		JLabel optionsBtn = new JLabel("Options");
+		optionsBtn.setAlignmentY(Component.TOP_ALIGNMENT);
+		sl_panel.putConstraint(SpringLayout.NORTH, optionsBtn, 64, SpringLayout.SOUTH, loadGameBtn);
+		optionsBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		optionsBtn.setFont(new Font("Dialog", Font.BOLD, 24));
+		sl_panel.putConstraint(SpringLayout.WEST, optionsBtn, 0, SpringLayout.WEST, newGameBtn);
+		panel.add(optionsBtn);
+		
+		JLabel aboutBtn = new JLabel("About");
+		sl_panel.putConstraint(SpringLayout.NORTH, exitBtn, 64, SpringLayout.SOUTH, aboutBtn);
+		aboutBtn.setAlignmentY(Component.TOP_ALIGNMENT);
+		sl_panel.putConstraint(SpringLayout.WEST, aboutBtn, 100, SpringLayout.WEST, panel);
+		aboutBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		aboutBtn.setFont(new Font("Dialog", Font.BOLD, 24));
+		sl_panel.putConstraint(SpringLayout.NORTH, aboutBtn, 77, SpringLayout.SOUTH, optionsBtn);
+		panel.add(aboutBtn);
+	}
+}

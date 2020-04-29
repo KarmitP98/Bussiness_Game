@@ -1,0 +1,74 @@
+package design;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+
+public class HomePageForm extends JFrame {
+
+	private JPanel contentPane;
+	private Dimension screenSize;
+	private int WIDTH, HEIGHT;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					HomePageForm frame = new HomePageForm();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void setScreenSize() {
+		// TODO Auto-generated method stub
+		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.WIDTH = (int) screenSize.getWidth();
+		this.HEIGHT = (int) screenSize.getHeight();
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public HomePageForm() {
+		// Set screen size
+		setScreenSize();
+
+		setResizable(false);
+		setBackground(Color.WHITE);
+		setAlwaysOnTop(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0, 0, 1920, 1080);
+		setUndecorated(true);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JLabel exitBtn = new JLabel("Exit");
+		exitBtn.setFont(new Font("Tahoma", Font.BOLD, 24));
+		exitBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		exitBtn.setToolTipText("Exit Button");
+		exitBtn.setBounds(1821, 1046, 89, 23);
+		contentPane.add(exitBtn);
+	}
+}
