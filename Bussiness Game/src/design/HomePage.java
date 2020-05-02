@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class HomePage{
+public class HomePage extends JFrame {
 
     private static JFrame frame;
     private Dimension screenSize;
@@ -26,8 +26,15 @@ public class HomePage{
         });
     }
 
-    private void initialize() {
-        mainPanel.setBounds(0,0,W,H);
+    public static void main(String[] args) {
+        frame = new JFrame("HomePage");
+        frame.setContentPane(new HomePage().mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocation(0, 0);
+        frame.setUndecorated(true);
+        frame.setExtendedState(MAXIMIZED_BOTH);
+        frame.pack();
+        frame.setVisible(true);
     }
 
     private void setupScreenSize() {
@@ -49,14 +56,13 @@ public class HomePage{
         return H;
     }
 
-    public static void main(String[] args) {
-        frame = new JFrame("HomePage");
-        frame.setContentPane(new HomePage().mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(0,0,1920,1080);
-        frame.setUndecorated(true);
-        frame.pack();
-        frame.setVisible(true);
+    private void initialize() {
+        mainPanel.setBounds(0, 0, W, H);
+
+        mainPanel.setLayout(new OverlayLayout(mainPanel));
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }
