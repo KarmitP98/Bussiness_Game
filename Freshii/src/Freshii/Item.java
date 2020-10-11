@@ -1,14 +1,17 @@
-package System;
+package Freshii;
 
-public class Item {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Item implements Cloneable {
 
     private int iId;
     private float iPrice;
     private String iSize, iName, category;
-    private String[] iIngredients, iAllergens, iNutritions;
+    private ArrayList<String> iIngredients = new ArrayList<>(), iAllergens = new ArrayList<>(), iNutritions = new ArrayList<>();
     private float[] iDimensions;
 
-    public Item(int iId, float iPrice, String iSize, String iName, String category, String[] iIngredients, String[] iAllergens, String[] iNutritions, float[] iDimensions) {
+    public Item(int iId, float iPrice, String iSize, String iName, String category, ArrayList<String> iIngredients, ArrayList<String> iAllergens, ArrayList<String> iNutritions, float[] iDimensions) {
         this.iId = iId;
         this.iPrice = iPrice;
         this.iSize = iSize;
@@ -18,6 +21,14 @@ public class Item {
         this.iAllergens = iAllergens;
         this.iNutritions = iNutritions;
         this.iDimensions = iDimensions;
+    }
+
+    public Item() {
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public int getiId() {
@@ -60,27 +71,27 @@ public class Item {
         this.category = category;
     }
 
-    public String[] getiIngredients() {
+    public ArrayList<String> getiIngredients() {
         return iIngredients;
     }
 
-    public void setiIngredients(String[] iIngredients) {
+    public void setiIngredients(ArrayList<String> iIngredients) {
         this.iIngredients = iIngredients;
     }
 
-    public String[] getiAllergens() {
+    public ArrayList<String> getiAllergens() {
         return iAllergens;
     }
 
-    public void setiAllergens(String[] iAllergens) {
+    public void setiAllergens(ArrayList<String> iAllergens) {
         this.iAllergens = iAllergens;
     }
 
-    public String[] getiNutritions() {
+    public ArrayList<String> getiNutritions() {
         return iNutritions;
     }
 
-    public void setiNutritions(String[] iNutritions) {
+    public void setiNutritions(ArrayList<String> iNutritions) {
         this.iNutritions = iNutritions;
     }
 
@@ -90,5 +101,20 @@ public class Item {
 
     public void setiDimensions(float[] iDimensions) {
         this.iDimensions = iDimensions;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "iId=" + iId +
+                ", iPrice=" + iPrice +
+                ", iSize='" + iSize + '\'' +
+                ", iName='" + iName + '\'' +
+                ", category='" + category + '\'' +
+                ", iIngredients=" + iIngredients +
+                ", iAllergens=" + iAllergens +
+                ", iNutritions=" + iNutritions +
+                ", iDimensions=" + Arrays.toString(iDimensions) +
+                '}';
     }
 }

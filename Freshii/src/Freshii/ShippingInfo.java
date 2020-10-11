@@ -1,20 +1,20 @@
-package System;
+package Freshii;
 
 public class ShippingInfo {
 
-    private int sId;
+    private String sId;
     private String sLocation;
 
-    public ShippingInfo(int sId, String sLocation) {
+    public ShippingInfo(String sId, String sLocation) {
         this.sId = sId;
         this.sLocation = sLocation;
     }
 
-    public int getsId() {
+    public String getsId() {
         return sId;
     }
 
-    public void setsId(int sId) {
+    public void setsId(String sId) {
         this.sId = sId;
     }
 

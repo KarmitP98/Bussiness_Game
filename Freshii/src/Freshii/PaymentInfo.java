@@ -1,31 +1,39 @@
-package System;
+package Freshii;
 
 import java.util.ArrayList;
 
 public class PaymentInfo {
 
-    private int pId, cId;
-    private ArrayList<PaymentDetail> cards;
+    private String pId, cId;
+    private ArrayList<PaymentDetail> cards = new ArrayList<>();
 
-    public PaymentInfo(int pId, int cId, ArrayList<PaymentDetail> cards) {
+    public PaymentInfo(String pId, String cId) {
+        this.pId = pId;
+        this.cId = cId;
+    }
+
+    public PaymentInfo(String pId, String cId, ArrayList<PaymentDetail> cards) {
         this.pId = pId;
         this.cId = cId;
         this.cards = cards;
     }
 
-    public int getpId() {
+    public PaymentInfo() {
+    }
+
+    public String getpId() {
         return pId;
     }
 
-    public void setpId(int pId) {
+    public void setpId(String pId) {
         this.pId = pId;
     }
 
-    public int getcId() {
+    public String getcId() {
         return cId;
     }
 
-    public void setcId(int cId) {
+    public void setcId(String cId) {
         this.cId = cId;
     }
 
@@ -54,5 +62,12 @@ public class PaymentInfo {
         return this.getCards().contains(card);
     }
 
-
+    @Override
+    public String toString() {
+        return "PaymentInfo{" +
+                "pId='" + pId + '\'' +
+                ", cId='" + cId + '\'' +
+                ", cards=" + cards +
+                '}';
+    }
 }
