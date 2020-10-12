@@ -7,30 +7,23 @@ public class Customer {
     private String cId;
     private String cName;
     private String cEmail;
+    private int phone;
     private ArrayList<Order> orders = new ArrayList<>();
     private ShoppingCart shoppingCart = new ShoppingCart();
-    private PaymentInfo paymentInfo = new PaymentInfo();
 
     private Order temp = new Order();
 
     public Customer() {
     }
 
-    public Customer(String cId, String cName, String cEmail) {
+    public Customer(String cId, String cName, String cEmail, int phone) {
         this.cId = cId;
         this.cName = cName;
         this.cEmail = cEmail;
+        this.phone = phone;
 
         this.shoppingCart = new ShoppingCart(cId + "-1", cId);
 
-    }
-
-    public PaymentInfo getPaymentInfo() {
-        return paymentInfo;
-    }
-
-    public void setPaymentInfo(PaymentInfo paymentInfo) {
-        this.paymentInfo = paymentInfo;
     }
 
     public String getcId() {
@@ -47,6 +40,14 @@ public class Customer {
 
     public void setcName(String cName) {
         this.cName = cName;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 
     public String getcEmail() {
@@ -73,43 +74,62 @@ public class Customer {
         this.shoppingCart = shoppingCart;
     }
 
-    public void addPaymentMethod(PaymentDetail card) {
-        paymentInfo.addPaymentMethod(card);
-    }
-
-    public void removePaymentMethod(PaymentDetail card) {
-        paymentInfo.removePaymentMethod(card);
-    }
-
     public Item searchItem(String iName) {
         return DATA_BASE.searchItem(iName);
     }
 
-    public boolean shop(Item item, int q) {
-        this.shoppingCart.addItem(item, q);
+    public boolean shop(Item item) {
+        this.shoppingCart.addItem(item);
         return true;
     }
 
     public Order checkOut() {
         this.temp = this.shoppingCart.checkOut();
-        this.temp.setOrderId(this.cId + "-" + this.orders.size());
-        this.temp.setOrderStatus("unpaid");
-        this.shoppingCart.clearCart();
+        if (this.temp != null) {
+            this.temp.setOrderId(this.cId + "-" + this.orders.size());
+            this.temp.setOrderStatus("unpaid");
+            this.temp.setShippingLocation("Ontario");
+        }
+
         return temp;
     }
 
     public void selectShipping(ShippingInfo shippingInfo) {
-        this.temp.setShippingLocation(shippingInfo.getsLocation());
-    }
-
-    public void selectPaymentMethod(PaymentDetail paymentDetail) {
-
+        if (shoppingCart.getTotalItems() == 0)
+            this.temp.setShippingLocation(shippingInfo.getsLocation());
     }
 
     public void pay() {
         this.temp.setOrderStatus("paid");
         DATA_BASE.addOrder(this.temp);
+        this.orders.add(this.temp);
+        this.shoppingCart.clearCart();
         this.temp = new Order();
+    }
+
+    public ArrayList<Item> searchItemCategory(String category) {
+        return DATA_BASE.searchByCategory(category);
+    }
+
+    public String checkOrderStatus(String orderId, String cId) {
+        String status = "No Order Found!";
+
+        for (Order order : orders) {
+            if (order.getOrderId().equals(orderId) && order.getCustomerId().equals(cId)) {
+                status = order.getOrderStatus();
+            }
+        }
+        return status;
+    }
+
+    public boolean cancelOrder(String orderId, String cId) {
+        for (Order order : orders) {
+            if (order.getOrderId().equals(orderId) && order.getCustomerId().equals(cId) && !order.getOrderStatus().equals("signed for")) {
+                orders.remove(order);
+                return DATA_BASE.removeOrder(order);
+            }
+        }
+        return false;
     }
 
     @Override
@@ -120,7 +140,7 @@ public class Customer {
                 ", cEmail='" + cEmail + '\'' +
                 ", orders=" + orders +
                 ", shoppingCart=" + shoppingCart +
-                ", paymentInfo=" + paymentInfo +
+//                ", paymentInfo=" + paymentInfo +
                 '}';
     }
 }

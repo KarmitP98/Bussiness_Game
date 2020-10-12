@@ -1,17 +1,16 @@
 package Freshii;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Item implements Cloneable {
 
-    private int iId;
+    private int iId, quantity = 1;
     private float iPrice;
     private String iSize, iName, category;
     private ArrayList<String> iIngredients = new ArrayList<>(), iAllergens = new ArrayList<>(), iNutritions = new ArrayList<>();
-    private float[] iDimensions;
+    private ArrayList<Float> iDimensions;
 
-    public Item(int iId, float iPrice, String iSize, String iName, String category, ArrayList<String> iIngredients, ArrayList<String> iAllergens, ArrayList<String> iNutritions, float[] iDimensions) {
+    public Item(int iId, float iPrice, String iSize, String iName, String category, ArrayList<String> iIngredients, ArrayList<String> iAllergens, ArrayList<String> iNutritions, ArrayList<Float> iDimensions, int quantity) {
         this.iId = iId;
         this.iPrice = iPrice;
         this.iSize = iSize;
@@ -21,6 +20,7 @@ public class Item implements Cloneable {
         this.iAllergens = iAllergens;
         this.iNutritions = iNutritions;
         this.iDimensions = iDimensions;
+        this.quantity = quantity;
     }
 
     public Item() {
@@ -29,6 +29,14 @@ public class Item implements Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getiId() {
@@ -95,11 +103,11 @@ public class Item implements Cloneable {
         this.iNutritions = iNutritions;
     }
 
-    public float[] getiDimensions() {
+    public ArrayList<Float> getiDimensions() {
         return iDimensions;
     }
 
-    public void setiDimensions(float[] iDimensions) {
+    public void setiDimensions(ArrayList<Float> iDimensions) {
         this.iDimensions = iDimensions;
     }
 
@@ -114,7 +122,7 @@ public class Item implements Cloneable {
                 ", iIngredients=" + iIngredients +
                 ", iAllergens=" + iAllergens +
                 ", iNutritions=" + iNutritions +
-                ", iDimensions=" + Arrays.toString(iDimensions) +
+                ", iDimensions=" + iDimensions +
                 '}';
     }
 }

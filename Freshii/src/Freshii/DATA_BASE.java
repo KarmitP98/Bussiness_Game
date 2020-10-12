@@ -59,9 +59,20 @@ public class DATA_BASE {
         return false;
     }
 
-    public static boolean removeManager(Manager manager) {
-        if (managers.contains(manager)) {
-            managers.remove(manager);
+    public static boolean removeManager(String name) {
+
+        for (Manager manager : managers) {
+            if (manager.getmName().equalsIgnoreCase(name)) {
+                managers.remove(manager);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean removeOrder(Order order) {
+        if (orders.contains(order)) {
+            orders.remove(order);
             return true;
         }
         return false;
@@ -87,14 +98,12 @@ public class DATA_BASE {
         return null;
     }
 
-    public static boolean updateItem(Item newItem, int iId) {
-        for (Item item : items) {
-            if (item.getiId() == iId) {
-                item = newItem;
-                return true;
+    public static void updateItem(Item newItem, int iId) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getiId() == iId) {
+                items.set(i, newItem);
             }
         }
-        return false;
     }
 
     public static Order searchOrder(String oId) {
@@ -117,8 +126,25 @@ public class DATA_BASE {
         return null;
     }
 
-    public static void addItem(Item i1) {
+    public static boolean addItem(Item i1) {
+        for (Item item : items) {
+            if (item.getiId() == i1.getiId()) {
+                updateItem(i1, item.getiId());
+                return false;
+            }
+        }
         items.add(i1);
+        return true;
+    }
+
+    public static boolean removeItem(String name) {
+        for (Item item : items) {
+            if (item.getiName().equalsIgnoreCase(name)) {
+                items.remove(item);
+                return true;
+            }
+        }
+        return false;
     }
 
     public static String string() {
@@ -128,5 +154,24 @@ public class DATA_BASE {
                 getItems().toString() + "\n" +
                 getOrders().toString() + "\n" +
                 "}";
+    }
+
+    public static ArrayList<Item> searchByCategory(String category) {
+        ArrayList<Item> result = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item.getCategory().equals(category)) {
+                result.add(item);
+            }
+        }
+
+        return result;
+    }
+
+    public static void clearClass() {
+        customers.clear();
+        managers.clear();
+        orders.clear();
+        items.clear();
     }
 }

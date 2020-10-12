@@ -3,9 +3,8 @@ package Freshii;
 import java.util.ArrayList;
 
 public class Order implements Cloneable {
-    private String customerId, orderId, shippingLocation, orderStatus;
+    private String customerId, orderId, shippingLocation = "Ontario", orderStatus;
     private ArrayList<Item> items = new ArrayList<>();
-    private ArrayList<Integer> quantities = new ArrayList<>();
     private float amount;
 
 
@@ -16,19 +15,17 @@ public class Order implements Cloneable {
         this.customerId = customerId;
     }
 
-    public Order(String customerId, ArrayList<Item> items, ArrayList<Integer> quantities, float amount) {
+    public Order(String customerId, ArrayList<Item> items, float amount) {
         this.customerId = customerId;
         this.items = items;
-        this.quantities = quantities;
         this.amount = amount;
     }
 
-    public Order(String customerId, String orderId, String orderStatus, ArrayList<Item> items, ArrayList<Integer> quantities) {
+    public Order(String customerId, String orderId, String orderStatus, ArrayList<Item> items) {
         this.customerId = customerId;
         this.orderId = orderId;
         this.orderStatus = orderStatus;
         this.items = items;
-        this.quantities = quantities;
     }
 
     @Override
@@ -72,18 +69,10 @@ public class Order implements Cloneable {
         this.items = items;
     }
 
-    public ArrayList<Integer> getQuantities() {
-        return quantities;
-    }
-
-    public void setQuantities(ArrayList<Integer> quantities) {
-        this.quantities = quantities;
-    }
-
     public float getAmount() {
         float amt = 0;
         for (int i = 0; i < items.size(); i++) {
-            amt += items.get(i).getiPrice() * quantities.get(i);
+            amt += items.get(i).getiPrice() * items.get(i).getQuantity();
         }
         return amt;
     }
@@ -101,7 +90,6 @@ public class Order implements Cloneable {
                 ", shippingLocation='" + shippingLocation + '\'' +
                 ", orderStatus='" + orderStatus + '\'' +
                 ", items=" + items +
-                ", quantities=" + quantities +
                 ", amount=" + amount +
                 '}';
     }

@@ -6,7 +6,6 @@ public class ShoppingCart {
 
     private String caId;
     private ArrayList<Item> caItems = new ArrayList<>();
-    private ArrayList<Integer> caQuantity = new ArrayList<>();
     private String customerId;
     private float amount = 0;
 
@@ -19,10 +18,9 @@ public class ShoppingCart {
         this.customerId = customerId;
     }
 
-    public ShoppingCart(String caId, ArrayList<Item> caItems, ArrayList<Integer> caQuantity, String customerId) {
+    public ShoppingCart(String caId, ArrayList<Item> caItems, String customerId) {
         this.caId = caId;
         this.caItems = caItems;
-        this.caQuantity = caQuantity;
         this.customerId = customerId;
     }
 
@@ -38,13 +36,6 @@ public class ShoppingCart {
         this.caItems = caItems;
     }
 
-    public ArrayList<Integer> getCaQuantity() {
-        return caQuantity;
-    }
-
-    public void setCaQuantity(ArrayList<Integer> caQuantity) {
-        this.caQuantity = caQuantity;
-    }
 
     public String getCustomerId() {
         return customerId;
@@ -52,8 +43,8 @@ public class ShoppingCart {
 
     public boolean updateQuantity(int q, Item item) {
         if (this.exists(item)) {
-            int index = this.caItems.indexOf(item);
-            this.caQuantity.set(index, q);
+            caItems.get(caItems.indexOf(item)).setQuantity(q);
+            return true;
         }
         return false;
     }
@@ -65,15 +56,17 @@ public class ShoppingCart {
         if (this.caItems.size() > 0) {
             result = "";
             for (int i = 0; i < caItems.size(); i++) {
-                result = result.concat(i + ". " + caItems.get(i).getiName() + " - " + caQuantity.get(i) + "\n");
-                total += caItems.get(i).getiPrice() * caQuantity.get(i);
+                result = result.concat(i + ". " + caItems.get(i).getiName() + " - " + caItems.get(i).getQuantity() + "\n");
+                total += caItems.get(i).getiPrice() * caItems.get(i).getQuantity();
             }
         }
         return result.concat("\nTotal: $ " + total);
     }
 
     public Order checkOut() {
-        return new Order(this.customerId, (ArrayList<Item>) this.caItems.clone(), (ArrayList<Integer>) this.caQuantity.clone(), this.amount);
+        if (caItems.size() < 2 || caItems.size() > 10)
+            return null;
+        return new Order(this.customerId, (ArrayList<Item>) this.caItems.clone(), this.amount);
     }
 
     private boolean exists(Item item) {
@@ -83,7 +76,7 @@ public class ShoppingCart {
     private void setTotalAmount() {
         this.amount = 0;
         for (int i = 0; i < caItems.size(); i++) {
-            amount += caItems.get(i).getiPrice() * caQuantity.get(i);
+            amount += caItems.get(i).getiPrice() * caItems.get(i).getQuantity();
         }
     }
 
@@ -91,9 +84,8 @@ public class ShoppingCart {
         return amount;
     }
 
-    public void addItem(Item item, int q) {
+    public void addItem(Item item) {
         this.caItems.add(item);
-        this.caQuantity.add(q);
         this.setTotalAmount();
     }
 
@@ -102,15 +94,23 @@ public class ShoppingCart {
         return "ShoppingCart{" +
                 "caId='" + caId + '\'' +
                 ", caItems=" + caItems +
-                ", caQuantity=" + caQuantity +
                 ", customerId='" + customerId + '\'' +
                 ", amount=" + amount +
                 '}';
     }
 
     public void clearCart() {
-        this.caQuantity.clear();
         this.caItems.clear();
         this.setTotalAmount();
+    }
+
+    public int getTotalItems() {
+
+        int sum = 0;
+        for (Item item : this.caItems) {
+            sum += item.getQuantity();
+        }
+
+        return sum;
     }
 }

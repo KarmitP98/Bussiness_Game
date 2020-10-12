@@ -63,9 +63,9 @@ public class Manager {
         DATA_BASE.updateItem(newItem, iId);
     }
 
-    public void searchItem(String iName) {
+    public Item searchItem(String iName) {
         Item temp = DATA_BASE.searchItem(iName);
-
+        return temp;
     }
 
     public boolean changeOrderStatus(Order order, String status) {
@@ -78,6 +78,10 @@ public class Manager {
             }
         }
         return false;
+    }
+
+    public boolean removeItem(String name) {
+        return DATA_BASE.removeItem(name);
     }
 
     @Override
